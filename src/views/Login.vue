@@ -1,6 +1,6 @@
 <template>
     <div class="login-div">
-        <el-form :model="loginForm" label-width="auto" class="login-form">
+        <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="auto" class="login-form">
             <el-form-item label="用户名" prop="username">
                 <el-input v-model="loginForm.username" placeholder="请输入"></el-input>
             </el-form-item>
@@ -8,7 +8,7 @@
                 <el-input v-model="loginForm.password" placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary">登录</el-button>
+                <el-button type="primary" @click="login">登录</el-button>
                 <el-button>注册</el-button>
             </el-form-item>
         </el-form>
@@ -24,15 +24,34 @@ export default {
             loginForm: {
                 username: '',
                 password: ''
+            },
+            rules: {
+                username: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur' }
+                ]
             }
         }
+    },
+    methods: {
+        login() {
+            this.$refs.loginForm.validate((valid) => {
+                if (valid) {
+                    this.$router.push('/index')
+                } else {
+                    return false;
+                }
+            })
+        }
     }
+
 }
 </script>
 
 <style lang="scss" scoped>
-
-.login-div{
+.login-div {
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -41,13 +60,13 @@ export default {
     background-size: 100% 100%;
 }
 
-.login-form{
+.login-form {
     width: 350px;
-    margin: 0 auto;
+    margin-left: 50%;
     padding: 30px;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 0 10px #409EFF;
-}
 
+}
 </style>

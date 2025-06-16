@@ -18,6 +18,26 @@ const routes = [
   },
 
   {
+    path: '/index',
+    name: 'Index',
+    component: () => import('../views/home/Index.vue'),
+    children: [
+      {
+        path: '/usermanage',
+        name: 'UserManage',
+        component: () => import('../views/sysmanage/UserManage.vue')
+      },
+      {
+        path: '/rolemanage',
+        name: 'RoleManage',
+        component: () => import('../views/sysmanage/RoleManage.vue')
+      }
+    ]
+  },
+
+
+
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
