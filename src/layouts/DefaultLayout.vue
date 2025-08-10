@@ -24,11 +24,12 @@
         </el-aside>
         <el-container>
             <el-header class="el-header-box">
+
                 <el-dropdown>
                     <i class="el-icon-setting" style="margin-right: 20px; font-size: 20px;"></i>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>个人信息</el-dropdown-item>
-                        <el-dropdown-item>注销</el-dropdown-item>
+                        <el-dropdown-item @click="logout">注销</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
                 <span style="font-size: 20px;">用户名</span>
@@ -47,7 +48,14 @@
 import { RouterView } from 'vue-router';
 
 export default {
-    name: 'DefaultLayout'
+    name: 'DefaultLayout',
+    methods:{
+        logout(){
+            alert('11')
+            // this.$store.commit('setToken', '')
+            this.$router.push('/login')
+        }
+    }
 }
 </script>
 

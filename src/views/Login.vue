@@ -2,14 +2,17 @@
     <div class="login-div">
         <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="auto" class="login-form">
             <el-form-item label="用户名" prop="username">
-                <el-input v-model="loginForm.username" placeholder="请输入"></el-input>
+                <el-input v-model="loginForm.userName" placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
                 <el-input v-model="loginForm.password" placeholder="请输入"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="login">登录</el-button>
-                <el-button>注册</el-button>
+                <el-button type="primary" @click="login" style="width: 100%;">登录</el-button>
+            </el-form-item>
+            <el-form-item>
+                <input type="checkbox" style="margin-left: 5px;"/>
+                <label>记住密码</label>
             </el-form-item>
         </el-form>
     </div>
@@ -22,11 +25,11 @@ export default {
     data() {
         return {
             loginForm: {
-                username: '',
+                userName: '',
                 password: ''
             },
             rules: {
-                username: [
+                userName: [
                     { required: true, message: '请输入用户名', trigger: 'blur' }
                 ],
                 password: [
@@ -36,12 +39,11 @@ export default {
         }
     },
     methods: {
-        login() {
-            this.$refs.loginForm.validate((valid) => {
-                if (valid) {
-                    this.$router.push('/index')
-                } else {
-                    return false;
+        login(){
+            this.axios.post('http://127.0.0.1:8082/login', this.loginForm).then(res => {
+                if(res.code === 200) {
+                    this.$message.success('登录成功');
+                    this.$router.push({name: 'home'});
                 }
             })
         }
@@ -64,7 +66,7 @@ export default {
     width: 350px;
     margin-left: 50%;
     padding: 30px;
-    text-align: center;
+    text-align: left;
     border-radius: 8px;
     box-shadow: 0 0 10px #409EFF;
 
