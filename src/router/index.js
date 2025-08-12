@@ -22,6 +22,18 @@ const routes = [
     component: () => import('../views/home/Index.vue'),
     children: [
       {
+        path: '/mockmanage',
+        name: 'MockManage',
+        component: () => import('../views/testtool/MockManage.vue'),
+        children: [
+          {
+            path: '/mockmanage/amazonwholesale',
+            name: 'AmazonWholesale',
+            component: () => import('../views/testtool/mockmanage/AmazonWholesale.vue')
+          }
+        ]
+      },
+      {
         path: '/usermanage',
         name: 'UserManage',
         component: () => import('../views/sysmanage/UserManage.vue')
