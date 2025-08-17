@@ -12,5 +12,13 @@ export const getMockData = (data) => {
 }
 
 export const exportTxt = (data) => {
-    return httpClient.get('/exportTxt/'+data)
+    return httpClient.get('/exportTxt/'+data,{
+        responseType: 'blob'
+    })
 }
+
+export const exportExcel = (data) =>{
+    
+}
+
+

@@ -10,8 +10,10 @@
                 </el-form-item>
             </el-form>
             <div class="preview-btn">
+                <el-button @click="exportTxt">导出</el-button>
                 <el-button type="primary" @click="preview">预览</el-button>
             </div>
+
 
         </div>
 
@@ -20,8 +22,8 @@
                 <!-- <json-viewer :value="mockData" :expand-depth="5" copyable boxed  style="background-color: #f5f5f5;">
                 </json-viewer> -->
 
-                <vue-json-editor v-model="mockData" :showBtns="true" :mode="'code'" lang="zh" :expandedOnStart="false" @json-save="submitMock"
-                    class="code-json-editor" />
+                <vue-json-editor v-model="mockData" :showBtns="true" :mode="'code'" lang="zh" :expandedOnStart="false"
+                    @json-save="submitMock" class="code-json-editor" />
             </el-drawer>
         </div>
     </div>
@@ -29,8 +31,11 @@
 
 
 <script>
-import { getMockData,exportTxt } from '@/api'
+import { getMockData, exportTxt} from '@/api'
+import { downloadFile,getFileName } from '@/utils/FileUtil'
 import vueJsonEditor from 'vue-json-editor'
+
+
 export default {
     name: 'AmazonWholesale',
     components: {
@@ -52,7 +57,7 @@ export default {
             this.$refs.wholesaleForm.validate((valid) => {
                 if (valid) {
                     getMockData(10).then(res => {
-                        if (res.code == 200) {
+                        if (res.data.code == 200) {
                             this.mockData = res.data
                         } else {
                             this.mockData = res
@@ -65,9 +70,19 @@ export default {
                 }
             });
         },
+        exportTxt() {
+            exportTxt(10).then(res => {
+                if (res.status == 200) {
+                    let fileName = getFileName(res.headers['content-disposition'])
+                    downloadFile(res.data, 'text/plain', fileName)
+                }
+            })
+
+        },
+
 
         submitMock() {
-            exportTxt(10);
+
         }
     }
 

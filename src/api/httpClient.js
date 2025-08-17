@@ -6,7 +6,7 @@ import axios from "axios";
 //创建一个axios实例
 const httpClient = axios.create({
     baseURL: '/api',
-    timeout:60000
+    timeout: 60000
 })
 
 
@@ -27,7 +27,7 @@ httpClient.interceptors.request.use(
 httpClient.interceptors.response.use(
     //成功的回调
     response => {
-        return response.data
+        return response
     },
     //失败的回调
     error => {

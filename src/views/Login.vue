@@ -48,7 +48,7 @@ export default {
                         userName: this.loginForm.userName,
                         password: this.loginForm.password
                     }).then(res => {
-                        if (res.code === 200) {
+                        if (res.data.code === 200) {
                             this.$message.success('登录成功');
                             this.$router.push('/index')
                         } else {
